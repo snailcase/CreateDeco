@@ -7,7 +7,7 @@ license = "Insert License Here"
 modId = "createdeco"
 version = "${version}"
 displayName = "Create Deco"
-authors = "Kayla, Talrey"
+authors = "Kayla, Talrey, Ordana, Cassian"
 description = '''
 Decorative options for your Create factory
 '''
@@ -31,5 +31,5 @@ side = "BOTH"
 modId="create"
 mandatory=true
 versionRange="${create_version}"
-ordering="NONE"
+ordering="AFTER"
 side="BOTH"

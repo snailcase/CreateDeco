@@ -16,6 +16,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -237,5 +238,40 @@ public class CatwalkRailingBlock extends Block implements IWrenchable, ProperWat
       ItemRequirement.ItemUseType.CONSUME,
       new ItemStack(this.asItem(), count)
     );
+  }
+
+  public BlockState rotate(BlockState state, Rotation rotation) {
+    boolean north = state.getValue(NORTH_FENCE);
+    boolean south = state.getValue(SOUTH_FENCE);
+    boolean east = state.getValue(EAST_FENCE);
+    boolean west = state.getValue(WEST_FENCE);
+    switch (rotation){
+      case CLOCKWISE_90 -> {
+        north = state.getValue(WEST_FENCE);
+        south = state.getValue(EAST_FENCE);
+        east = state.getValue(NORTH_FENCE);
+        west = state.getValue(SOUTH_FENCE);
+      }
+      case CLOCKWISE_180 -> {
+        north = state.getValue(SOUTH_FENCE);
+        south = state.getValue(NORTH_FENCE);
+        east = state.getValue(WEST_FENCE);
+        west = state.getValue(EAST_FENCE);
+      }
+      case COUNTERCLOCKWISE_90 -> {
+        north = state.getValue(EAST_FENCE);
+        south = state.getValue(WEST_FENCE);
+        east = state.getValue(SOUTH_FENCE);
+        west = state.getValue(NORTH_FENCE);
+      }
+      case NONE -> {
+        north = state.getValue(NORTH_FENCE);
+        south = state.getValue(SOUTH_FENCE);
+        east = state.getValue(EAST_FENCE);
+        west = state.getValue(WEST_FENCE);
+      }
+    }
+    BlockState newState = defaultBlockState().setValue(NORTH_FENCE, north).setValue(SOUTH_FENCE, south).setValue(EAST_FENCE, east).setValue(WEST_FENCE, west);
+    return newState;
   }
 }
